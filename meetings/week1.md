@@ -10,10 +10,11 @@ What if we dont have A and B? Model-free methods (PID, RL)
 
 Measuring the performance of an control algorithm based on 2 key points: final accumulative reward, number of trials before achieving good policy.  
 
-Iterative Learning Control in CT (design control system on repetitive task) is equivalent to Reinforcement Learning 
+Iterative Learning Control in CT (design control system on repetitive task) is equivalent to Reinforcement Learning  
+
 RL tries to hide as much info about env as possible, however there is a trade off: require a lot of iteration. On the other hand, ILC requires model -> few iteration to converge to good solution. Good algorithm should be somewhere in between - estimate a nominal/coarse model?
 
-Most of comtemporary RL algorithms are based on Policy Gradient - estimate a stochastic policy. However we always can find a better deterministic policy, thus PG is suboptimal - in CT, no assumption of having stochastic policy. Derived algorithm from Policy Gradient such as TRPO (with whritst and bell on policy update) or soft Actor-Critic can help, I want to see how these algorithms comparing with Random Search, since TRPO is more careful on updating policy than PG (from the blog post).  
+Most of comtemporary RL algorithms are based on Policy Gradient - estimate a stochastic policy. However we always can find a better deterministic policy, thus PG is suboptimal - in CT, no assumption of having stochastic policy. Derived algorithms from Policy Gradient such as TRPO (with whritst and bell on policy update) or soft Actor-Critic can help, I want to see how these algorithms comparing with Random Search, since TRPO is more careful on updating policy than PG (from the blog post).  
 
 Approach on LQR with model estimator:
 An estimator of model -> nominal model.
