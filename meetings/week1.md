@@ -31,9 +31,32 @@ They have paper on this estimation and how to estimate also the uncertainty - th
 Questions:
 Coarse-ID control assumes a linear relation between state and action (control params)?
 
+----------------------------------------------------------------------------------------------------
+Note from discussion:
 
+Direct method
+Indirect method (value function)
+Learning from experience
+Learning from demonstration
 
+Learning for robotics:
+Policy search -> policy gradient, actor-critic,
+optimal control -> build model, optimization control or model-free (guarantee of method, robustness)
+model-based, model-free RL -> end-to-end learning, have data, fit function to data and return (pass the modeling step)
 
+Model-free: pass domain-knowledge, method in RL (policy search) not good, not guarantee anything
+
+-------------------------
+how to engineer domain knowledge to RL method?
+Learning MPC 
+Combine Kalman Filter with RL
+AlphaZero (planning problem) deternimistic given (too big), planning method cannot be solved, learning value function and policy function, have a model, planning is local refinement?
+Embed to control: generative model in embedded space (autoencoder), encoding state space
+Sergey Levine: combine local pertubation, local model, global approximation, local becomes teacher of
+value iteration network (VIN): use deep cnn to model value iteration, planner 
+
+-----------------------------
+non-linear continuous time, HJB, iterative LQR 
 
 
 
