@@ -1,0 +1,134 @@
+\documentclass[12pt]{article}
+\usepackage{fullpage,psfrag,amsmath,verbatim}
+\usepackage[small,bf]{caption}
+
+\usepackage{algorithm, algorithmic, amsfonts, amsmath, amssymb, amsthm, graphicx, url}
+
+\usepackage{color}
+\usepackage[colorlinks,linkcolor=blue,citecolor=red]{hyperref}
+
+\newcommand{\eq}[1]{\eqref{eq:#1}}
+\newcommand{\eqd}[1]{\eqref{eq:#1}}
+\newcommand{\fig}[1]{Figure~\ref{fig:#1}}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{question}[theorem]{Question}
+\newtheorem{result}[theorem]{Result}
+
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{remark}[theorem]{Remark}
+\numberwithin{equation}{section}
+
+\newcommand{\submit}[2]{\iftoggle{submit}{#1}{#2}}
+
+% math macros
+\newcommand{\R}{\mathbb{R}}  
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\minimize}{\mathrm{minimize}}
+\newcommand{\maximize}{\mathrm{maximize}}
+\newcommand{\st}{\mathrm{subject to}}
+
+\title{Learning to Plan and Control: Extensive Reading List}
+\author{{\bf Hung Ngo} for CoTAI-L2P Study Group}
+%\date{} % Activate to display a given date or no date (if empty),
+         % otherwise the current date is printed 
+
+\begin{document}
+\maketitle
+
+Learning to plan \& control (L2P\&C) includes two main directions,
+\begin{itemize} 
+
+\item {\bf Learners that plan}: exploiting the model/simulator to generate quality {\em labeled} training data (or used as ``contextual/forecast features''), for the purposes of data efficiency, effective learning, and scaling to very large planning domains. Typical approach: use local planners to generate {\color{red}supervisions} for training global learner, like AlphaZero, GPS. 
+
+\item {\bf Planners that learn}: combining the best of both worlds (planning/optimal control: strong generalization power with provable guarantees, while learning provides adaptation and mitigates the compound errors and cost in building models). Typical approach: embed and train {\color{red}differentiable classical modules}, like dynamic programming, search tree, A$^*$ search heuristics, MPC, path-integral, Kalman/particle filter, etc. See talk by \href{https://personalrobotics.cs.washington.edu/workshops/mlmp2018/assets/ppts/boots_iros_mlmp_2018.pdf}{Byron Boots} at IROS'18. 
+
+Interestingly, now there's a trend of applying ``{\color{red}end-to-end differentiable X for Y}'' in many areas: \href{http://proceedings.mlr.press/v70/baram17a.html}{imitation learning} at ICML'18, \href{https://github.com/uclmr/ntp}{proving}, \href{https://www.biorxiv.org/content/early/2018/08/29/265231}{protein}, physics in task and motion planning (TAMP) as by Marc Toussaint \href{http://www.roboticsproceedings.org/rss14/p44.pdf}{RSS'18}  best paper (\href{https://github.com/MarcToussaint/18-RSS-PhysicalManipulation}{code}) and Filipe's \href{https://filipeabperes.github.io/files/2018/nips_poster.pdf}{poster} at \href{https://papers.nips.cc/paper/7948-end-to-end-differentiable-physics-for-learning-and-control}{NIPS'18}  (\href{https://github.com/locuslab/lcp-physics}{code}).
+
+\end{itemize}
+
+Relevant venues: \href{https://sites.google.com/site/planlearn18/}{PAL-18}---Workshop on Planning and Leaning. 
+
+\section{Learners that plan}
+\paragraph{Guided policy search GPS.}
+Read ICML'13 paper \href{http://proceedings.mlr.press/v28/levine13.html}{Guided Policy Search} by Sergey Levine and Vladlen Koltun, then read the \href{https://arxiv.org/abs/1504.00702}{JMLR'16} paper ``End-to-End Training of Deep Visuomotor Policies'', then read \href{https://arxiv.org/abs/1509.06791}{ICRA'16} paper ``Learning Deep Control Policies for Autonomous Aerial Vehicles with MPC-Guided Policy Search''. Check out code repo and also read other papers in this \href{http://rll.berkeley.edu/gps/index.html}{GPS page}. 
+
+\paragraph{Alpha(Go)Zero.} DeepMind's \href{https://deepmind.com/blog/alphago-zero-learning-scratch/}{blog}. Updated \href{https://deepmind.com/blog/alphazero-shedding-new-light-grand-games-chess-shogi-and-go/}{post} with Science'18 publication.
+
+\paragraph{Imagination-based learning to plan.} DeepMind with Pascanu's \href{https://www.semanticscholar.org/paper/Learning-model-based-planning-from-scratch-Pascanu-Li/bd1d59433e3b7ae7207c24b4cd1838acea91425c}{learning model-based planning from scratch} in 2017. Then the \href{ https://deepmind.com/blog/agents-imagine-and-plan/}{I2A} architecture. VIN also belongs to this group in the sense it uses contextual features from abstract planning module to help learn better reactive policy.
+
+\section{Planners that learn}
+
+\paragraph{Value Iteration Networks VIN.} NIPS'16 \href{https://papers.nips.cc/paper/6046-value-iteration-networks}{paper}. Theano \href{https://github.com/avivt/VIN}{implementation} by 1st author; See also related implementation at the end of the GitHub page. Read Karpathy's \href{http://www.shortscience.org/paper?bibtexKey=journals/corr/TamarLA16}{review}. 
+
+~
+
+\noindent After VIN, there are many papers taking up the core ideas and apply to different classical modules:
+
+\paragraph{Learning Generalized Reactive Policies using Deep Neural Networks.} \href{https://www.semanticscholar.org/paper/Learning-Generalized-Reactive-Policies-using-Deep-Groshev-Tamar/aebcd81be09f6e99b21e6c6869949673ab6f4343}{ICAPS'18}.  
+
+\paragraph{TreeQN and ATreeC.} Differentiable Tree-Structured Models for Deep Reinforcement Learning. \href{https://openreview.net/forum?id=H1dh6Ax0Z}{ICLR'18}.
+
+\paragraph{Kalman and L2P.}
+
+\paragraph{Path Integral Networks: End-to-End Differentiable Optimal Control.} The PI-Net in this paper (\href{https://www.semanticscholar.org/paper/Path-Integral-Networks%3A-End-to-End-Differentiable-Okada-Rigazio/696ec77d7bcf5b71039877e07dbbdb341d04b4e3?navId=citing-papers}{2018}) has inspired many other papers.
+
+\paragraph{Value Propagation Networks.} \href{https://openreview.net/forum?id=Bya8fGWAZ}{Submitted} to ICLR'18, good reviews but workshop decision. See list of \href{https://www.semanticscholar.org/paper/Value-Propagation-Networks-Nardelli-Synnaeve/3db81ca3076dc8a63d7e9447402c297a5a0fdfcc?navId=similar-papers}{similar papers}.
+
+\paragraph{Universal Planning Networks, ICML'18.} \href{https://sites.google.com/view/upn-public/home}{Blog post}. \href{https://github.com/aravind0706/upn}{Code repo}.  UPNs embed differentiable planning within a goal-directed policy. This planning computation unrolls a forward model in a latent space and infers an optimal action plan through gradient descent trajectory optimization. The plan-by-gradient-descent process and its underlying representations are learned end-to-end to directly optimize a supervised imitation learning objective. The authors find that the representations learned are not only effective for goal-directed visual imitation via gradient-based trajectory optimization, but can also provide a metric for specifying goals using images.
+
+\paragraph{Differentiable MPC.} There are a growing number of papers in this line of research!
+\begin{itemize} 
+\item \href{https://www.semanticscholar.org/paper/Neural-Network-Dynamics-for-Model-Based-Deep-with-Nagabandi-Kahn/14a2d7c405e022fe2ee5b427dad9141d80353e1c}{Neural Network Dynamics for Model-Based Deep Reinforcement Learning with Model-Free Fine-Tuning} at ICRA'18. \href{https://github.com/nagaban2/nn_dynamics}{Code repo}.
+ %
+\item \href{https://www.semanticscholar.org/paper/Differentiable-MPC-for-End-to-end-Planning-and-Amos-Rodr%C3%ADguez/2cd83c1dabe3d538207e9604ee5379fa78905d4d}{Differentiable MPC for End-to-end Planning and Control} at \href{https://papers.nips.cc/paper/8050-differentiable-mpc-for-end-to-end-planning-and-control}{NIPS'18}. \href{https://locuslab.github.io/mpc.pytorch/}{Pytorch library} by \href{http://bamos.github.io/}{Brandon Amos}.
+%
+\item \href{https://www.semanticscholar.org/paper/MPC-Inspired-Neural-Network-Policies-for-Sequential-Pereira-Fan/521915cf8238e55e400235a4624903e26a16c533}{MPC-Inspired Neural Network Policies for Sequential Decision Making}. 
+\end{itemize}
+
+\paragraph{Reinforcement learning with A$^*$ and a deep heuristic (2018).}  Inspired by recent methods combining Deep Neural Networks (DNNs) and trees, this study demonstrates how to {\color{red}train a heuristic represented by a DNN} and combine it with A$^*$. \href{https://github.com/imagry/aleph_star}{Code repo}. \href{www.youtube.com/watch?v=WSfynn8bwbI}{Talk video}. \href{https://www.reddit.com/r/MachineLearning/comments/9q667i/r_reinforcement_learning_with_a_and_a_deep/}{Reddit discussion}.
+
+
+\section{Model-based RL}
+
+Though having 2 distinct learning and planning phases, this approach also provides many interesting techniques and ideas for our L2C\&P topic. So, keep an eye on this topic also.
+
+\subsection{Embedded Models}
+
+In this approach a model in embedding space is learned and then used for planning. 
+
+\paragraph{Embed to Control E2C.}
+
+Read NIPS'15 \href{https://papers.nips.cc/paper/5964-embed-to-control-a-locally-linear-latent-dynamics-model-for-control-from-raw-images}{paper}. TensorFlow \href{https://github.com/ericjang/e2c}{implementation} by Eric Jang; Torch7 \href{https://github.com/iassael/torch-e2c}{notebook} by Assael \& Deisenroth. 
+% https://github.com/lonelysun1990/E2C
+% https://gridworld.wordpress.com/2015/07/23/embed-to-control-a-locally-linear-latent-dynamics-model-for-control-from-raw-images/
+
+\paragraph{Prediction and Control with Temporal Segment Models.} \href{https://icml.cc/Conferences/2017/Schedule?showParentSession=1057}{ICML'17}.
+
+\paragraph{World Models.} Cool \href{https://worldmodels.github.io/}{blog, paper, and code} by \href{http://blog.otoro.net/}{Hardmaru} (David Ha).
+
+\paragraph{Learning MPC/RHC.}
+
+See \href{http://www.mpc.berkeley.edu/research/adaptive-and-learning-predictive-control}{Learning MPC} page of Francesco Borrelli's MPC Lab at Berkeley.
+
+% See also book http://www.mpc.berkeley.edu/mpc-course-material
+
+\subsection{Plan and control using prediction-based models}
+
+DeepMind's \href{ https://deepmind.com/blog/agents-imagine-and-plan/}{I2A}. VIN/VPN, HER \& its extensions. Pascanu's \href{https://www.semanticscholar.org/paper/Learning-model-based-planning-from-scratch-Pascanu-Li/bd1d59433e3b7ae7207c24b4cd1838acea91425c}{Imagination-based Planner}.
+
+\subsection{Neuralogic / Logic-Geometric learning \& planning}
+
+\paragraph{Learning and Planning with a Semantic Model.} \href{https://openreview.net/forum?id=SJgs1n05YQ}{Under review} at ICLR'19.
+
+\paragraph{End-2-end differential physics in task and motion planning (TAMP).} As by Marc Toussaint \href{http://www.roboticsproceedings.org/rss14/p44.pdf}{RSS'18} best paper (\href{https://github.com/MarcToussaint/18-RSS-PhysicalManipulation}{code}) and Filipe's \href{https://filipeabperes.github.io/files/2018/nips_poster.pdf}{poster} at \href{https://papers.nips.cc/paper/7948-end-to-end-differentiable-physics-for-learning-and-control}{NIPS'18} with \href{https://github.com/locuslab/lcp-physics}{code repo}.
+
+\section{Robust Control with Bayesian Modeling}
+
+Bayesian modeling provides a principled way to manage uncertainty. It also supports adaptive learning via online update style. To be updated.
+
+\end{document}
